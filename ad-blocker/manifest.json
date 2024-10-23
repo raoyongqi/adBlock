@@ -7,7 +7,9 @@
     "declarativeNetRequest",
     "declarativeNetRequestWithHostAccess",
     "activeTab",
-    "storage"
+    "storage",
+    "notifications",
+    "alarms"
   ],
   "host_permissions": [
     "<all_urls>"
@@ -16,12 +18,12 @@
     "service_worker": "background.js"
   },
   "icons": {
-    "48": "images/adblocker.png"
+    "48": "images/spider.png"
   },
   "action": {
     "default_popup": "popup.html",
     "default_icon": {
-      "48": "images/adblocker.png"
+      "48": "images/spider.png"
     }
   },
   "declarative_net_request": {

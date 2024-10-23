@@ -1,24 +1,46 @@
-let blocking = true;
-
-chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
-  if (message.action === "toggleBlocking") {
-    blocking = message.value;
-  }
-});
-
 function updateAdBlocking() {
+  const adBlockingRules = [
+    {
+      "id": 1,
+      "priority": 1, // High priority
+      "action": {
+        "type": "redirect",
+        "redirect": {
+          "regexSubstitution": chrome.runtime.getURL("local_file.html") // Replace with your actual HTML file
+        }
+      },
+      "condition": {
+        "urlFilter": "*://*.bing.com/*"
+      }
+    },
+    {
+      "id": 2,
+      "priority": 2,
+      "action": {
+        "type": "block"
+      },
+      "condition": {
+        "urlFilter": "*://*.adserver.com/*"
+      }
+    },
+    {
+      "id": 3,
+      "priority": 3,
+      "action": {
+        "type": "block"
+      },
+      "condition": {
+        "urlFilter": "*://*.doubleclick.net/*"
+      }
+    }
+  ];
+
   if (blocking) {
-    const url = chrome.runtime.getURL("ad_blocking_rules.json");
-    fetch(url)
-      .then((response) => response.json())
-      .then((data) => {
-        console.log(data);
-        chrome.declarativeNetRequest.updateDynamicRules({
-          addRules: data,
-          removeRuleIds: [],
-        });
-      })
-      .catch((err) => console.error("Error loading ad blocking rules", err));
+    // Use the ad blocking rules directly
+    chrome.declarativeNetRequest.updateDynamicRules({
+      addRules: adBlockingRules,
+      removeRuleIds: [],
+    });
   } else {
     chrome.declarativeNetRequest.updateDynamicRules({
       addRules: [],
