@@ -1,0 +1,36 @@
+{
+  "manifest_version": 3,
+  "name": "Simple Ad Blocker",
+  "version": "1.0",
+  "description": "A basic ad blocker extension",
+  "permissions": [
+    "declarativeNetRequest",
+    "declarativeNetRequestWithHostAccess",
+    "activeTab",
+    "storage"
+  ],
+  "host_permissions": [
+    "<all_urls>"
+  ],
+  "background": {
+    "service_worker": "background.js"
+  },
+  "icons": {
+    "48": "images/adblocker.png"
+  },
+  "action": {
+    "default_popup": "popup.html",
+    "default_icon": {
+      "48": "images/adblocker.png"
+    }
+  },
+  "declarative_net_request": {
+    "rule_resources": [
+      {
+        "id": "ad_blocking_rules",
+        "enabled": true,
+        "path": "ad_blocking_rules.json"
+      }
+    ]
+  }
+}
